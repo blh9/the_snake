@@ -42,6 +42,7 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры.
 class GameObject():
     """Базовый класс объектов игры"""
+
     # инизиализация Объекта
     def __init__(self) -> None:
         self.position = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -59,6 +60,7 @@ class Apple(GameObject):
     Увеличивающий длинну змейки при съедении,
     Имеет случайную позицию
     """
+
     # инизиализация яблока
     def __init__(self):
         super().__init__()
@@ -87,6 +89,7 @@ class Snake(GameObject):
     Управляется игроком,
     Меняет направление
     """
+
     # Инизиализирует змею
     def __init__(self):
         super().__init__()
