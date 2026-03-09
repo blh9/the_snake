@@ -41,20 +41,28 @@ clock = pygame.time.Clock()
 
 # Тут опишите все классы игры.
 class GameObject():
+    """Базовый класс объектов игры"""
     def __init__(self) -> None:
-        self.position = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        self.position = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.body_color = None
 
+    # Заготовка под функцию для наследования
     def draw(self) -> None:
         pass
 
 
 class Apple(GameObject):
+    """
+    Класс яблока,
+    Увеличивающий длинну змейки при съедении,
+    Имеет случайную позицию
+    """
     def __init__(self):
         super().__init__()
         self.body_color = (255, 0, 0)
         self.randomize_position()
 
+    # Отрисовка яблока на поле.
     def draw(self):
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
@@ -62,12 +70,19 @@ class Apple(GameObject):
 
     # Создание случайной позиции яблока.
     def randomize_position(self) -> None:
-        rand_x = randint(0, GRID_WIDTH-1)*GRID_SIZE
-        rand_y = randint(0, GRID_HEIGHT-1)*GRID_SIZE
+        rand_x = randint(0, GRID_WIDTH - 1) * GRID_SIZE
+        rand_y = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
         self.position = (rand_x, rand_y)
 
 
 class Snake(GameObject):
+    """
+    Класс змея,
+    Управляется игроком,
+    Меняет направление
+    """
+
+    # Инизиализирует змею
     def __init__(self):
         super().__init__()
         # Стандартная длинна.
@@ -110,11 +125,8 @@ class Snake(GameObject):
 
         self.check_edges()
 
-    # Проверка граней.
+    # Проверяем части змейки на выход за зону
     def check_edges(self):
-        """
-        Проверяем части змейки на выход за зону
-        """
         for position in self.positions:
             # Если за правой границей
             if position[0] >= SCREEN_WIDTH:
@@ -138,6 +150,7 @@ class Snake(GameObject):
                 height = SCREEN_HEIGHT - GRID_SIZE
                 self.positions.insert(0, (position[0], height))
 
+    # Отрисовка черного экрана
     def draw(self):
         for position in self.positions[:-1]:
             rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
