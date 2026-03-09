@@ -42,7 +42,6 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры.
 class GameObject():
     """Базовый класс объектов игры"""
-
     # инизиализация Объекта
     def __init__(self) -> None:
         self.position = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -60,7 +59,6 @@ class Apple(GameObject):
     Увеличивающий длинну змейки при съедении,
     Имеет случайную позицию
     """
-
     # инизиализация яблока
     def __init__(self):
         super().__init__()
@@ -69,7 +67,6 @@ class Apple(GameObject):
 
     def draw(self):
         """Отрисовка яблока на поле."""
-
         # Создание квадрата
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         # Отрисовка
@@ -90,7 +87,6 @@ class Snake(GameObject):
     Управляется игроком,
     Меняет направление
     """
-
     # Инизиализирует змею
     def __init__(self):
         super().__init__()
@@ -113,7 +109,6 @@ class Snake(GameObject):
 
     def move(self) -> None:
         """Задает движение змейки."""
-
         # Корректируем длинну направления.
         new_direction = [vector * 20 for vector in self.direction]
         # Обновлённая позиция головы.
@@ -138,7 +133,6 @@ class Snake(GameObject):
 
     def check_edges(self):
         """Проверяем части змейки на выход за зону"""
-
         for position in self.positions:
             # Если за правой границей
             if position[0] >= SCREEN_WIDTH:
@@ -164,7 +158,6 @@ class Snake(GameObject):
 
     def draw(self):
         """Отрисовка змейки и затирание последнего объекта"""
-
         for position in self.positions[:-1]:
             rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
             pygame.draw.rect(screen, self.body_color, rect)
@@ -182,18 +175,15 @@ class Snake(GameObject):
 
     def get_head_position(self):
         """Возвращает первый элемент змеи"""
-
         return self.positions[0]
 
     def reset(self):
         """Возвращает в обычное состояние игру"""
-
         self.positions = [self.position]
 
 
 def handle_keys(game_object):
     """Управление движением"""
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -211,14 +201,12 @@ def handle_keys(game_object):
 
 def draw_bg() -> None:
     """Рисует задний экран"""
-
     new_rect = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
     pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, new_rect)
 
 
 def main():
     """Основная функция программы"""
-
     # Инициализация PyGame:
     pygame.init()
     # Тут нужно создать экземпляры классов.
