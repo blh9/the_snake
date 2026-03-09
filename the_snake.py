@@ -42,6 +42,8 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры.
 class GameObject():
     """Базовый класс объектов игры"""
+
+    # инизиализация Объекта
     def __init__(self) -> None:
         self.position = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.body_color = None
@@ -57,6 +59,8 @@ class Apple(GameObject):
     Увеличивающий длинну змейки при съедении,
     Имеет случайную позицию
     """
+
+    # инизиализация яблока
     def __init__(self):
         super().__init__()
         self.body_color = (255, 0, 0)
@@ -64,7 +68,9 @@ class Apple(GameObject):
 
     # Отрисовка яблока на поле.
     def draw(self):
+        # Создание квадрата
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
+        # Отрисовка
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
@@ -72,6 +78,7 @@ class Apple(GameObject):
     def randomize_position(self) -> None:
         rand_x = randint(0, GRID_WIDTH - 1) * GRID_SIZE
         rand_y = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        # создаем новую позицию
         self.position = (rand_x, rand_y)
 
 
@@ -96,6 +103,7 @@ class Snake(GameObject):
         self.body_color = (0, 255, 0)
         self.last = None
 
+    # изменить напрвавление
     def update_direction(self) -> None:
         if self.next_direction:
             self.direction = self.next_direction
@@ -150,7 +158,7 @@ class Snake(GameObject):
                 height = SCREEN_HEIGHT - GRID_SIZE
                 self.positions.insert(0, (position[0], height))
 
-    # Отрисовка черного экрана
+    # Отрисовка змейки и затирание последнего объекта
     def draw(self):
         for position in self.positions[:-1]:
             rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
@@ -167,9 +175,11 @@ class Snake(GameObject):
             last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
 
+    # Возвращает первый элемент змеи
     def get_head_position(self):
         return self.positions[0]
 
+    # Возвращает в обычное состояние игру
     def reset(self):
         self.positions = [self.position]
 
@@ -191,6 +201,7 @@ def handle_keys(game_object):
                 game_object.next_direction = RIGHT
 
 
+# Рисует задний экран
 def draw_bg() -> None:
     new_rect = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
     pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, new_rect)
