@@ -174,6 +174,7 @@ class Snake(GameObject):
         self.positions = [self.position]
 
 
+# Управление движением
 def handle_keys(game_object):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
