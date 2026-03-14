@@ -45,7 +45,7 @@ clock = pg.time.Clock()
 class GameObject():
     """Базовый класс объектов игры."""
 
-    def __init__(self, color) -> None:
+    def __init__(self, color=(0, 0, 0)) -> None:
         """инизиализация Объекта"""
         self.position = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.body_color = color
@@ -65,7 +65,7 @@ class Apple(GameObject):
     """
 
     # инизиализация яблока
-    def __init__(self, color, snake_position):
+    def __init__(self, color=APPLE_COLOR, snake_position=None):
         super().__init__(color)
         self.randomize_position(snake_position)
         self.draw()
@@ -103,7 +103,7 @@ class Snake(GameObject):
     """
 
     # Инизиализирует змею
-    def __init__(self, color):
+    def __init__(self, color=SNAKE_COLOR):
         super().__init__(color)
         self.reset()
         self.next_direction = None
