@@ -160,13 +160,16 @@ class Snake(GameObject):
 
 
 def handle_keys(game_object):
-    """Управление движением."""
+    """Управление движением.
+
+    Не смог додуматься как сделать закрытие на ESC,
+    без получения ошибки
+    ./the_snake.py:162:1: C901 'handle_keys' is too complex (15).
+    """
+
     global speed
     for event in pg.event.get():
         if event.type == pg.QUIT:
-            pg.quit()
-            raise SystemExit
-        if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             pg.quit()
             raise SystemExit
         if event.type == pg.KEYDOWN:
