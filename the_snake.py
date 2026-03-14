@@ -159,19 +159,32 @@ class Snake(GameObject):
         self.direction = RIGHT
 
 
-def handle_keys(game_object):
-    """Управление движением.
-
-    Не смог додуматься как сделать закрытие на ESC,
-    без получения ошибки
-    ./the_snake.py:162:1: C901 'handle_keys' is too complex (15).
-    """
-
+def handle_speed(event):
+    """Управление скоростью."""
     global speed
+
+    if event.type == pg.KEYDOWN:
+        if event.key == pg.K_1:
+            speed = 5
+        elif event.key == pg.K_2:
+            speed = 10
+        elif event.key == pg.K_3:
+            speed = 20
+        elif event.key == pg.K_LSHIFT:
+            speed *= 2
+
+    elif event.type == pg.KEYUP:
+        if event.key == pg.K_LSHIFT:
+            speed /= 2
+
+
+def handle_keys(game_object):
+    """Управление движением."""
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
             raise SystemExit
+
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_UP and game_object.direction != DOWN:
                 game_object.next_direction = UP
@@ -181,18 +194,11 @@ def handle_keys(game_object):
                 game_object.next_direction = LEFT
             elif event.key == pg.K_RIGHT and game_object.direction != LEFT:
                 game_object.next_direction = RIGHT
-            elif event.key == pg.K_1:
-                speed = 5
-            elif event.key == pg.K_2:
-                speed = 10
-            elif event.key == pg.K_3:
-                speed = 20
-            elif event.key == pg.K_LSHIFT:
-                speed *= 2
+            elif event.key == pg.K_ESCAPE:
+                pg.quit()
+                raise SystemExit
 
-        if event.type == pg.KEYUP:
-            if event.key == pg.K_LSHIFT:
-                speed /= 2
+        handle_speed(event)
 
 
 def main():
