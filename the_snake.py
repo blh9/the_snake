@@ -116,6 +116,7 @@ class Snake(GameObject):
             self.next_direction = None
 
     def move(self) -> None:
+        """Движение Змейки."""
         d_x, d_y = self.direction
         h_x, h_y = self.positions[0]
         self_x = (h_x + (d_x * GRID_SIZE)) % SCREEN_WIDTH
@@ -165,12 +166,12 @@ def handle_keys(game_object):
         if event.type == pg.QUIT:
             pg.quit()
             raise SystemExit
+        if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+            pg.quit()
+            raise SystemExit
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_UP and game_object.direction != DOWN:
                 game_object.next_direction = UP
-            elif event.key == pg.K_ESCAPE:
-                pg.quit()
-                raise SystemExit
             elif event.key == pg.K_DOWN and game_object.direction != UP:
                 game_object.next_direction = DOWN
             elif event.key == pg.K_LEFT and game_object.direction != RIGHT:
